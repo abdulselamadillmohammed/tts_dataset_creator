@@ -51,4 +51,10 @@ def transcribe_chunk(chunk_path, model_path, whisper_bin):
     ]
 
     res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if res.returncode != 0:
+        raise RuntimeError(f"whisper.cpp failed on {chunk_path}:\n{res.stderr.decode('utf-8', 'ignore')}")
+    
+    txt_path = base_noext + ".txt"
+    with open(txt_path, "r", encoding="utf-8") as f:
+        return f.read().strip()
     
