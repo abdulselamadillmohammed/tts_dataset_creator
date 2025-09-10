@@ -73,7 +73,27 @@ def main():
         print(f"Model not found: {MODEL_PATH}")
         sys.exit(1)
 
+    # Prepare output structure
+    wavs_dir = os.path.join(OUT_DIR, "wavs")
+    ensure_dir(wavs_dir)
+    meta_lines = []
 
+    # 1) split
+    print("Splitting...")
+    chunks = list(split_wav(in_wav, wavs_dir, CHUNK_SEC))
+
+    # 2) transcribe each chunk via whisper.cpp
+    print("Transcribing...")
+    for fname, fpath in chunks:
+        txt = transcribe_chunk(fpath, MODEL_PATH, WHISPER_BIN)
+        meta_lines.append(f"wavs/{fname}|{txt}")
+        print(f"  {fname}: {txt[:60]}{'...' if len(txt)>60 else ''}")
+
+    # 3) write metadata.csv
+    meta_path = os.path.join(OUT_DIR, "metadata.csv")
+    with open(meta_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(meta_lines))
+    print(f"\nDone.\nWrote {meta_path}\nChunks in {wavs_dir}")
 
 if __name__ == "__main__":
     main()
