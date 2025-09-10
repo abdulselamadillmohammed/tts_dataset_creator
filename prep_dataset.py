@@ -58,3 +58,22 @@ def transcribe_chunk(chunk_path, model_path, whisper_bin):
     with open(txt_path, "r", encoding="utf-8") as f:
         return f.read().strip()
     
+# should return metadata.csv  
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python prep_dataset_whispercpp.py <input.wav>")
+        sys.exit(1)
+
+    in_wav = sys.argv[1]
+    if not os.path.exists(in_wav):
+        print(f"Input not found: {in_wav}")
+        sys.exit(1)
+    
+    if not os.path.exists(MODEL_PATH):
+        print(f"Model not found: {MODEL_PATH}")
+        sys.exit(1)
+
+
+
+if __name__ == "__main__":
+    main()
