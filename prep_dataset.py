@@ -32,3 +32,23 @@ def split_wav(in_wav, out_dir, chunk_sec=10):
                 out.setframerate(rate)
                 out.writeframes(frames)
             yield name, out_path
+
+def transcribe_chunk(chunk_path, model_path, whisper_bin):
+    """
+    Call whisper.cpp CLI in order to produce a .txt trancription of the chunk.
+    """
+
+    base_noext = os.path.splitext(chunk_path)[0]
+    out_prefix = base_noext
+    cmd = [
+        whisper_bin,
+        "-m", model_path, 
+        "-f", chunk_path,
+        "-l", "en",
+        "-of", out_prefix,
+        "-otxt"
+        # add flags like, e.g. "-pp" for puncuation probabilites
+    ]
+
+    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    
