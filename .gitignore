@@ -1,6 +1,35 @@
-/venv
-/models
-/inputs
-notes.py
-/dataset_out
+# macOS system files
+.DS_Store
+
+# Python virtual environments
+/venv/
+
+# Model checkpoints or large model files
+/models/
+
+# Raw input data
+/inputs/
+
+# Output datasets
+/dataset_out/
+
+# Local environment variables
 .env
+
+# Scratch or personal notes
+notes.py
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+
+# Jupyter and Colab checkpoints
+.ipynb_checkpoints/
+
+# Logs and temp files
+*.log
+*.tmp

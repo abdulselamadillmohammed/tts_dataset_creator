@@ -6,3 +6,9 @@ ffmpeg-python==0.2.0
 whisper.cpp-cli
 openai
 python-dotenv
+
+datasets 
+huggingface_hub 
+soundfile 
+pandas 
+pyarrow
