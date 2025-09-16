@@ -33,3 +33,5 @@ dist/
 # Logs and temp files
 *.log
 *.tmp
+
+my_voice_dataset
